@@ -50,7 +50,7 @@ const Sidebar: React.FC<MyComponentProps> = ({ children }) => {
                 <li>
                   <Link href="/" className={`flex items-center space-x-2 px-4 py-2 bg-[#cbcbcb2f] mx-5 rounded-xl`}>
                     <div className='flex items-center gap-3'>
-                      <img src="/images/seko.jpg" width={37} className='rounded-full' alt="" />
+                      <img src="https://github.com/siemseko/revenue-expenses.git" width={37} className='rounded-full' alt="" />
                       <div>
                         <div className='text-[#000000be] font-bold'>SIEM Seko</div>
                         <div className='text-[#00000027]'>Admin</div>
