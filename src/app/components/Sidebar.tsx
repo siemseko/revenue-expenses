@@ -102,7 +102,7 @@ const Sidebar: React.FC<MyComponentProps> = ({ children }) => {
           <div className='hidden md:block'><FaSearch /></div>
           <div className='flex items-center gap-5'>
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Flag_of_Cambodia.svg/1200px-Flag_of_Cambodia.svg.png" width={30} className='rounded-sm' alt="" />
-            <img src="/images/seko.jpg" width={37} className='rounded-full' alt="" />
+            <img src="https://siemseko.github.io/revenue-expenses/images/seko.jpg" width={37} className='rounded-full' alt="" />
           </div>
         </header>
         <main className='container mx-auto h-screen' onClick={() => setIsOpen(false)} >

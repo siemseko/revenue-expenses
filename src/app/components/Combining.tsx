@@ -1,89 +1,50 @@
 "use client"
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import { BarPlot } from '@mui/x-charts/BarChart';
-import { LineHighlightPlot, LinePlot } from '@mui/x-charts/LineChart';
-import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
-import { AllSeriesType } from '@mui/x-charts/models';
-import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
-import { ChartsYAxis } from '@mui/x-charts/ChartsYAxis';
-import { ChartsTooltip } from '@mui/x-charts/ChartsTooltip';
-import { ChartsAxisHighlight } from '@mui/x-charts/ChartsAxisHighlight';
-import { axisClasses } from '@mui/x-charts/ChartsAxis';
- 
+import { useState, useEffect } from 'react';
 
- 
-export default function Combining() {
+type Product = {
+  id: number;
+  description: string;
+  name: string;
+  // Add other properties based on your JSON structure
+};
+
+const Combining = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('https://siemseko.github.io/beta/database/products.json');
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const data: Product[] = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+
   return (
-    // <div style={{ width: '100%' }}>
-    //   <Typography>Alphabet stocks</Typography>
-    //   <div>
-    //     <ResponsiveChartContainer
-    //       series={series}
-    //       height={400}
-    //       margin={{ top: 10 }}
-    //       xAxis={[
-    //         {
-    //           id: 'date',
-    //           data: alphabetStock.map((day:any) => new Date(day.date)),
-    //           scaleType: 'band',
-    //           valueFormatter: (value) => value.toLocaleDateString(),
-    //         },
-    //       ]}
-    //       yAxis={[
-    //         {
-    //           id: 'price',
-    //           scaleType: 'linear',
-    //         },
-    //         {
-    //           id: 'volume',
-    //           scaleType: 'linear',
-    //           valueFormatter: (value) => `${(value / 1000000).toLocaleString()}M`,
-    //         },
-    //       ]}
-    //     >
-    //       <ChartsAxisHighlight x="line" />
-    //       <BarPlot />
-    //       <LinePlot />
-
-    //       <LineHighlightPlot />
-    //       <ChartsXAxis
-    //         label="date"
-    //         position="bottom"
-    //         axisId="date"
-    //         tickInterval={(value, index) => {
-    //           return index % 30 === 0;
-    //         }}
-    //         tickLabelStyle={{
-    //           fontSize: 10,
-    //         }}
-    //       />
-    //       <ChartsYAxis
-    //         label="Price (USD)"
-    //         position="left"
-    //         axisId="price"
-    //         tickLabelStyle={{ fontSize: 10 }}
-    //         sx={{
-    //           [`& .${axisClasses.label}`]: {
-    //             transform: 'translateX(-5px)',
-    //           },
-    //         }}
-    //       />
-    //       <ChartsYAxis
-    //         label="Volume"
-    //         position="right"
-    //         axisId="volume"
-    //         tickLabelStyle={{ fontSize: 10 }}
-    //         sx={{
-    //           [`& .${axisClasses.label}`]: {
-    //             transform: 'translateX(5px)',
-    //           },
-    //         }}
-    //       />
-    //       <ChartsTooltip />
-    //     </ResponsiveChartContainer>
-    //   </div>
-    // </div>
-    <div>sd</div>
+    <div>
+      <h1>Product List</h1>
+      <ul>
+        {products.map((product) => (
+          <li key={product.id}>
+            {product.name} - ${product.description}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
-}
+};
+
+export default Combining;
